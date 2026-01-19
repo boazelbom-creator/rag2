@@ -6,6 +6,8 @@ AWS Lambda function that ingests Facebook post data with pre-computed embeddings
 
 This function is part of a data pipeline designed to enable hybrid semantic and lexical search over Hebrew-language social media content. It reads posts from Aurora PostgreSQL (processed by upstream `posts_rag1` Lambda) and indexes them into OpenSearch with k-NN vector search enabled.
 
+**Note:** This Lambda is the authoritative source for OpenSearch index creation and configuration. The index settings (shards, replicas, analyzer, k-NN configuration) are defined in this codebase.
+
 ### Features
 
 - Streams data from Aurora PostgreSQL in configurable batches
@@ -63,7 +65,7 @@ Set the following environment variables:
 | `OPENSEARCH_HOST` | Yes | - | OpenSearch domain endpoint (e.g., `https://search-xyz.region.es.amazonaws.com`) |
 | `OPENSEARCH_REGION` | Yes | - | AWS region for SigV4 signing |
 | `NUMBER_OF_SHARDS` | No | 3 | Index shard count |
-| `NUMBER_OF_REPLICAS` | No | 0 | Index replica count |
+| `NUMBER_OF_REPLICAS` | No | 1 | Index replica count |
 | `REFRESH_INTERVAL` | No | 1s | Index refresh interval |
 | `BULK_BATCH_DOCS` | No | 1000 | Documents per bulk request |
 | `BULK_MAX_RETRIES` | No | 3 | Max retries for failed items |

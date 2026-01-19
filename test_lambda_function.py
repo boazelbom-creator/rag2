@@ -41,7 +41,7 @@ class TestConfig:
         assert Config.NUMBER_OF_SHARDS == 3
 
     def test_default_number_of_replicas(self):
-        assert Config.NUMBER_OF_REPLICAS == 0
+        assert Config.NUMBER_OF_REPLICAS == 1
 
     def test_default_refresh_interval(self):
         assert Config.REFRESH_INTERVAL == "1s"
@@ -262,7 +262,7 @@ class TestGetIndexSettings:
 
     def test_number_of_replicas(self):
         settings = get_index_settings()
-        assert settings["settings"]["index"]["number_of_replicas"] == 0
+        assert settings["settings"]["index"]["number_of_replicas"] == 1
 
     def test_refresh_interval(self):
         settings = get_index_settings()

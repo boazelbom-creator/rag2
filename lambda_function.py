@@ -36,7 +36,7 @@ class Config:
 
     # Index settings
     NUMBER_OF_SHARDS = int(os.environ.get("NUMBER_OF_SHARDS", "3"))
-    NUMBER_OF_REPLICAS = int(os.environ.get("NUMBER_OF_REPLICAS", "0"))
+    NUMBER_OF_REPLICAS = int(os.environ.get("NUMBER_OF_REPLICAS", "1"))
     REFRESH_INTERVAL = os.environ.get("REFRESH_INTERVAL", "1s")
 
     # Bulk ingestion

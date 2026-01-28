@@ -181,7 +181,7 @@ Index name: `rag-posts`
 | `full_chunk` | text | icu_analyzer |
 | `has_consultant` | boolean | - |
 | `engagement_norm` | float | - |
-| `embedding` | knn_vector (1024-dim, HNSW, cosine, Lucene engine) | - |
+| `embedding` | knn_vector (1024-dim, HNSW, cosinesimil, Lucene engine) | - |
 
 ## CloudWatch Metrics
 

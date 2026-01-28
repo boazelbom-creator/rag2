@@ -171,7 +171,7 @@ def get_index_settings() -> dict:
                     "dimension": 1024,
                     "method": {
                         "name": "hnsw",
-                        "space_type": "cosine",
+                        "space_type": "cosinesimil",
                         "engine": "lucene",
                     },
                 },
@@ -472,8 +472,26 @@ def lambda_handler(event: dict, context: Any) -> dict:
     """
     Main Lambda handler.
     Ingests data from Aurora PostgreSQL to OpenSearch.
+
+    Event parameters:
+    - delete_index: If true, deletes the index and returns (for re-creation)
     """
     logger.info("Starting posts_rag2 ingestion")
+
+    # Handle delete_index request
+    if event.get("delete_index"):
+        try:
+            os_client = get_opensearch_client()
+            index_name = Config.INDEX_NAME
+            if os_client.indices.exists(index=index_name):
+                os_client.indices.delete(index=index_name)
+                logger.info(f"Deleted index: {index_name}")
+                return {"statusCode": 200, "body": json.dumps({"message": f"Index {index_name} deleted"})}
+            else:
+                return {"statusCode": 200, "body": json.dumps({"message": f"Index {index_name} does not exist"})}
+        except Exception as e:
+            logger.error(f"Failed to delete index: {e}")
+            return {"statusCode": 500, "body": json.dumps({"error": str(e)})}
 
     # Validate configuration
     required_config = [

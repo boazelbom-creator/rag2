@@ -172,6 +172,7 @@ def get_index_settings() -> dict:
                     "method": {
                         "name": "hnsw",
                         "space_type": "cosine",
+                        "engine": "lucene",
                     },
                 },
             }
